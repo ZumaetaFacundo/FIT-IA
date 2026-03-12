@@ -252,7 +252,7 @@ function PlanModifier({ lang, type, plan, onUpdate, userData, macros }) {
       ? `Eres FitAI. El usuario tiene este plan:\n\n${plan}\n\nPerfil: ${userData.name}, ${userData.age}a, ${userData.weight}kg. Cal: ${macros?.target}/día.\nDevolvé ÚNICAMENTE el plan completo actualizado en el mismo formato markdown. Sin explicaciones.`
       : `You are FitAI. The user has this plan:\n\n${plan}\n\nProfile: ${userData.name}, ${userData.age}y, ${userData.weight}kg. Cal: ${macros?.target}/day.\nReturn ONLY the complete updated plan in the same markdown format. No explanations.`;
     try {
-      const res = await fetch("http://localhost:3001/api/chat", {
+      const res = await fetch("http://localhost:3002/api/chat", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 3000, system, messages: [{ role: "user", content: userMsg }] })
       });
@@ -426,7 +426,7 @@ export default function FitAI() {
       ? `Eres un coach de nutrición y fitness experto. El usuario se llama ${userData.name}, tiene ${userData.age} años, pesa ${userData.weight}kg, mide ${userData.height}cm. Objetivo: ${goals}. Dieta: ${diet}. Calorías: ${m.target} kcal. Macros: ${m.protein}g proteína, ${m.carbs}g carbos, ${m.fat}g grasas.\n\nCrea exactamente estas DOS secciones:\n\n## 🍽️ Plan de Comidas Semanal\nPlan de 7 días con desayuno, almuerzo, merienda y cena. Porciones específicas.\n\n## 💪 Plan de Entrenamiento Semanal\n5 días de entrenamiento. Para cada día: ejercicios con series x repeticiones y descanso.\n\n${userData.notes ? `Consideraciones: ${userData.notes}` : ""}\nFormato claro y motivador. En español.`
       : `You are an expert coach. User: ${userData.name}, ${userData.age}y, ${userData.weight}kg, ${userData.height}cm. Goal: ${goals}. Diet: ${diet}. Calories: ${m.target} kcal. Macros: ${m.protein}g protein, ${m.carbs}g carbs, ${m.fat}g fat.\n\nCreate exactly TWO sections:\n\n## 🍽️ Weekly Meal Plan\n7-day plan with breakfast, lunch, snack and dinner. Specific portions.\n\n## 💪 Weekly Workout Plan\n5 training days. For each day: exercises with sets x reps and rest.\n\n${userData.notes ? `Considerations: ${userData.notes}` : ""}\nClear and motivating format.`;
     try {
-      const res = await fetch("http://localhost:3001/api/chat", {
+      const res = await fetch("http://localhost:3002/api/chat", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 3000, messages: [{ role: "user", content: prompt }] })
       });
@@ -452,7 +452,7 @@ export default function FitAI() {
       ? `Eres FitAI, coach IA. Usuario: ${userData.name}, objetivo: ${t.goals[userData.goal]}, ${macros?.target} kcal/día. Respondé conciso y motivador. Máx 3 párrafos.`
       : `You are FitAI, AI coach. User: ${userData.name}, goal: ${t.goals[userData.goal]}, ${macros?.target} kcal/day. Respond concisely. Max 3 paragraphs.`;
     try {
-      const res = await fetch("http://localhost:3001/api/chat", {
+      const res = await fetch("http://localhost:3002/api/chat", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: sys, messages: newMsgs })
       });
